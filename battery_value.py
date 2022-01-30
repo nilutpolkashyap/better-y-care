@@ -1,9 +1,17 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLCDNumber, QProgressBar, QLabel
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLCDNumber, QProgressBar, QLabel, QComboBox, QPushButton
 from PyQt5 import uic
 import sys
 from PyQt5.QtCore import QTime, QTimer
 from datetime import datetime
 import psutil
+import serial.tools.list_ports
+
+ports = list(serial.tools.list_ports.comports())
+port_list = []
+value = ""
+
+for p in ports:
+	port_list.append(p[0])
 
 def convertTime(seconds):
 	minutes, seconds = divmod(seconds, 60)
@@ -26,6 +34,19 @@ class UI(QMainWindow):
 		
 		self.power_status = self.findChild(QLabel, "label4")
 		self.power_status.setText("NO")
+
+		self.com_label = self.findChild(QLabel, "label5")
+
+		self.button = self.findChild(QPushButton, "pushButton")
+
+		self.port_box = self.findChild(QComboBox, "comboBox")
+		self.port_box.addItems(port_list)
+
+		value = self.port_box.currentText()
+		self.com_label.setText(value)
+		# print(type(value))
+
+		self.button.clicked.connect(self.clickme)
 		
 		self.pbar.setStyleSheet("QProgressBar "
                           "{"
@@ -54,6 +75,10 @@ class UI(QMainWindow):
 		self.show()
 		
 		
+	def clickme(self):
+		value = self.port_box.currentText()
+		self.com_label.setText(value)
+	
 	def lcd_number(self):
 		# Get the time
         # time = datetime.now()
@@ -61,6 +86,8 @@ class UI(QMainWindow):
 		
 		battery = psutil.sensors_battery()
 		percent = battery.percent
+
+		# self.port_box.clear()
 
 		# Set number of LCD Digits
 		# self.lcd.setDigitCount(12)

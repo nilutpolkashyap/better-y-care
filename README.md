@@ -48,7 +48,9 @@ The GUI Window is made using **PyQt5** in Python. It displays the following :
     - Dropdown for COM Port Selection
 
 ## Demo Video 
-[Better-y Care - Automated Laptop Charge Monitor ](https://youtu.be/Gslyyzvvda4)
+<div align="center">
+<a href="https://youtu.be/Gslyyzvvda4"><img src="images/video.png" alt="Better-y Care - Automated Laptop Charge Monitor" ></a>
+</div><br />
 
 ## Project Page
 [Better-y Care - Automated Laptop Charge Monitor](https://devpost.com/software/better-y-care-automated-laptop-charge-monitor)
